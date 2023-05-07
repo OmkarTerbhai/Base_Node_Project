@@ -1,9 +1,8 @@
 const express = require('express');
+const { AirplaneController } = require('../../controllers');
 const router = express.Router();
 
-router.get('/info', (req, res) => {
-    return res.json({msg: "Coming from v2"});
-})
+router.post('/', AirplaneController)
 
 module.exports = 
     router

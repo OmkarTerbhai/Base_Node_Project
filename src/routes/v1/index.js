@@ -1,6 +1,11 @@
 const express = require('express');
+const AirplaneRoutes  = require('./airplane-routes');
+const { InfoController } = require('../../controllers');
 
 const router = express.Router();
-const { InfoController } = require('../../controllers');
+router.use('/airplanes', AirplaneRoutes);
 router.get('/info', InfoController.info);
-module.exports = router;
+
+
+module.exports = 
+    router

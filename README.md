@@ -29,3 +29,7 @@ Inside the source folder.
         ```
 
 -- Inside the src/config folder, create a file named 'config.json'
+
+To run the project: 
+    Run the command
+                npm run dev
