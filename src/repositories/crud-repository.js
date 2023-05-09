@@ -1,4 +1,6 @@
-const { Logger } = require('../config')
+const { Logger } = require('../config');
+const AppError = require('../utils/errors/app-error');
+const { StatusCodes } = require('http-status-codes');
 
 class CrudRepository {
     constructor(model) {
@@ -6,6 +8,7 @@ class CrudRepository {
     }
 
     async create(data) {
+            console.log("Inside repo")
             const response = await this.model.create(data);
             return response;
     }
@@ -28,12 +31,10 @@ class CrudRepository {
 
     async get(data) {
         try {
-            const response = await this.model.findByPk({
-                where: {
-                    id: data
-                }
-            });
-
+            const response = await this.model.findByPk(data);
+            if(!response) {
+                throw new AppError("Airplane does not exist", StatusCodes.NOT_FOUND);
+            }
             return response;
         }
         catch(error) {
@@ -42,13 +43,9 @@ class CrudRepository {
         }
     }
 
-    async get(data) {
+    async getAll() {
         try {
-            const response = await this.model.findAll({
-                where: {
-                    id: data
-                }
-            });
+            const response = await this.model.findAll();
 
             return response;
         }

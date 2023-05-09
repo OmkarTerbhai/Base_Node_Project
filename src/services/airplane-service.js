@@ -6,6 +6,7 @@ const { StatusCodes } = require('http-status-codes');
 const airplaneRepository = new AirplaneRepository();
 
 async function createAirplane(data) {
+    console.log("Inside Service")
     try {
         const airplane = await airplaneRepository.create(data);
         return airplane;
@@ -23,6 +24,27 @@ async function createAirplane(data) {
     }
 }
 
+async function getAirplanes() {
+    try {
+        const airplanes = await airplaneRepository.getAll();
+        return airplanes;
+    }
+    catch(error) {
+
+    }
+}
+
+async function getAirplane(data) {
+    try {
+        const airplane = await airplaneRepository.get(data);
+        return airplane;
+    }
+    catch(error) {
+
+    }
+}
 module.exports = {
-    createAirplane
+    createAirplane,
+    getAirplanes,
+    getAirplane
 }

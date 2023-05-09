@@ -4,7 +4,12 @@ const { AirplaneMiddlewares } = require('../../middlewares');
 
 const router = express.Router();
 
+console.log("Inside airplane routes");
 router.post('/', AirplaneMiddlewares.validateCreateRequest,AirplaneController.createAirplane)
+
+router.get('/', AirplaneController.getAirplanes);
+
+router.get('/:id', AirplaneController.getAirplane);
 
 module.exports = 
     router
