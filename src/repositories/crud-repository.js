@@ -60,7 +60,7 @@ class CrudRepository {
                     id: id
                 }
             });
-            if(!response) {
+            if(response[0] == 0) {
                 throw new AppError("Could not find airplane to update", StatusCodes.NOT_FOUND);
             }
             console.log(response);
