@@ -40,11 +40,26 @@ async function getAirplane(data) {
         return airplane;
     }
     catch(error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError("Airplane does not exist", StatusCodes.NOT_FOUND);
+        }
+    }
+}
 
+async function updateAirplane(id, data) {
+    try {
+        console.log("Inside update servce");
+        await airplaneRepository.update(id, data);
+    }
+    catch(error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError("Airplane to be updated could not be found", StatusCodes.NOT_FOUND);
+        }
     }
 }
 module.exports = {
     createAirplane,
     getAirplanes,
-    getAirplane
+    getAirplane,
+    updateAirplane
 }

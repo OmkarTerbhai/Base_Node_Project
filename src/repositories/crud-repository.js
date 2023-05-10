@@ -30,17 +30,15 @@ class CrudRepository {
     }
 
     async get(data) {
-        try {
+        
             const response = await this.model.findByPk(data);
-            if(!response) {
+            if(response == null) {
+                console.log(response);
                 throw new AppError("Airplane does not exist", StatusCodes.NOT_FOUND);
             }
             return response;
-        }
-        catch(error) {
-            Logger.error("Something went wrong in the CRUD repo");
-            throw error;
-        }
+        
+        
     }
 
     async getAll() {
@@ -55,20 +53,18 @@ class CrudRepository {
         }
     }
 
-    async update(data) {
-        try {
+    async update(id, data) {
+            console.log("In CRUD REPO update");
             const response = await this.model.update(data, {
                 where: {
-                    id: data
+                    id: id
                 }
             });
-
+            if(!response) {
+                throw new AppError("Could not find airplane to update", StatusCodes.NOT_FOUND);
+            }
+            console.log(response);
             return response;
-        }
-        catch(error) {
-            Logger.error("Something went wrong in the CRUD repo");
-            throw error;
-        }
     }
 }
 
