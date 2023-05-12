@@ -8,9 +8,8 @@ class CrudRepository {
     }
 
     async create(data) {
-            console.log("Inside repo")
-            const response = await this.model.create(data);
-            return response;
+        const response = await this.model.create(data);
+        return response;
     }
 
     async destroy(data) {
@@ -42,15 +41,13 @@ class CrudRepository {
     }
 
     async getAll() {
-        try {
-            const response = await this.model.findAll();
-
-            return response;
+        const response = await this.model.findAll();
+        if(!response) {
+            throw new AppError("Resource not found", StatusCodes.NOT_FOUND);
         }
-        catch(error) {
-            Logger.error("Something went wrong in the CRUD repo");
-            throw error;
-        }
+        return response;
+        
+        
     }
 
     async update(id, data) {
