@@ -1,14 +1,14 @@
 const { Logger } = require('../config');
-const {AirplaneRepository} = require('../repositories');
+const { AirportRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
 
-const airplaneRepository = new AirplaneRepository();
+const airportRepository = new AirportRepository();
 
-async function createAirplane(data) {
+async function createAirport(data) {
     console.log("Inside Service")
     try {
-        const airplane = await airplaneRepository.create(data);
+        const airplane = await airportRepository.create(data);
         return airplane;
     }
     catch(error) {
@@ -24,9 +24,9 @@ async function createAirplane(data) {
     }
 }
 
-async function getAirplanes() {
+async function getAirports() {
     try {
-        const airplanes = await airplaneRepository.getAll();
+        const airplanes = await airportRepository.getAll();
         return airplanes;
     }
     catch(error) {
@@ -34,9 +34,9 @@ async function getAirplanes() {
     }
 }
 
-async function getAirplane(data) {
+async function getAirport(data) {
     try {
-        const airplane = await airplaneRepository.get(data);
+        const airplane = await airportRepository.get(data);
         return airplane;
     }
     catch(error) {
@@ -46,10 +46,10 @@ async function getAirplane(data) {
     }
 }
 
-async function updateAirplane(id, data) {
+async function updateAirport(id, data) {
     try {
         console.log("Inside update servce");
-        await airplaneRepository.update(id, data);
+        await airportRepository.update(id, data);
     }
     catch(error) {
         if(error.statusCode == StatusCodes.NOT_FOUND) {
@@ -58,9 +58,9 @@ async function updateAirplane(id, data) {
     }
 }
 
-async function deleteAirplane(id) {
+async function deleteAirport(id) {
     try {
-        await airplaneRepository.destroy(id);
+        await airportRepository.destroy(id);
     }
     catch(error) {
         if(error.statusCode == StatusCodes.NOT_FOUND) {
@@ -69,9 +69,9 @@ async function deleteAirplane(id) {
     }
 }
 module.exports = {
-    createAirplane,
-    getAirplanes,
-    getAirplane,
-    updateAirplane,
-    deleteAirplane
+    createAirport,
+    getAirports,
+    getAirport,
+    updateAirport,
+    deleteAirport
 }

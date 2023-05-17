@@ -1,6 +1,8 @@
 const { Logger } = require('../config');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
+const { ErrorMessages } = require('../utils/constants');
+
 
 class CrudRepository {
     constructor(model) {
@@ -13,27 +15,24 @@ class CrudRepository {
     }
 
     async destroy(data) {
-        try {
             const response = await this.model.destroy({
                 where: {
                     id: data
                 }
             });
-
+            console.log(response);
+            if(response == 0) {
+                throw new AppError(ErrorMessages.RESOURCE_NOT_FOUND, StatusCodes.NOT_FOUND);
+            }
             return response;
-        }
-        catch(error) {
-            Logger.error("Something went wrong in the CRUD repo");
-            throw error;
-        }
+        
     }
 
     async get(data) {
-        
             const response = await this.model.findByPk(data);
             if(response == null) {
                 console.log(response);
-                throw new AppError("Airplane does not exist", StatusCodes.NOT_FOUND);
+                throw new AppError("Resource does not exist", StatusCodes.NOT_FOUND);
             }
             return response;
         
@@ -58,7 +57,7 @@ class CrudRepository {
                 }
             });
             if(response[0] == 0) {
-                throw new AppError("Could not find airplane to update", StatusCodes.NOT_FOUND);
+                throw new AppError("Could not find resource to update", StatusCodes.NOT_FOUND);
             }
             console.log(response);
             return response;

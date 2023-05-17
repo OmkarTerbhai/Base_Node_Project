@@ -2,6 +2,8 @@ const { Logger } = require('../config');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
 const { CityRepository } = require('../repositories');
+const { SuccessMessages , ErrorMessages } = require('../utils/constants');
+
 
 const cityRepository = new CityRepository();
 
@@ -22,12 +24,50 @@ async function getCities() {
     }
     catch(error) {
         if(error.statusCode == StatusCodes.NOT_FOUND) {
-            throw new AppError("Cities not found", StatusCodes.NOT_FOUND);
+            throw new AppError(ErrorMessages.CITY_NOT_FOUND, StatusCodes.NOT_FOUND);
+        }
+    }
+}
+
+async function getCityById(id) {
+    try {
+        const city = cityRepository.get(id);
+        return city;
+    }
+    catch(error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError(ErrorMessages.CITY_NOT_FOUND, StatusCodes.NOT_FOUND);
+        }
+    }
+
+}
+
+async function updateCities(id, data) {
+    try {
+        await cityRepository.update(id, data);
+    }
+    catch(error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError(ErrorMessages.CITY_NOT_FOUND, StatusCodes.NOT_FOUND);
+        }
+    }
+}
+
+async function deleteCity(id) {
+    try {
+        await cityRepository.destroy(id);
+    }
+    catch(error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError(ErrorMessages.CITY_NOT_FOUND, StatusCodes.NOT_FOUND);
         }
     }
 }
 
 module.exports = {
     createCity,
-    getCities
+    getCities,
+    updateCities,
+    getCityById,
+    deleteCity
 }
