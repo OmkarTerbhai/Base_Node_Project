@@ -11,6 +11,9 @@ class CrudRepository {
 
     async create(data) {
         const response = await this.model.create(data);
+        if(!response) {
+            throw new AppError("Could not create");
+        }
         return response;
     }
 

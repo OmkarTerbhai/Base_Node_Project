@@ -20,14 +20,19 @@ async function createAirport(data) {
             })
             throw new AppError(explanation, StatusCodes.INTERNAL_SERVER_ERROR);
         }
-        throw new AppError("Cannot create a new airplane object", StatusCodes.INTERNAL_SERVER_ERROR);
+        Logger.error(error);
+        throw new AppError("Cannot create a new aiport object", StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
-async function getAirports() {
+async function getAirports(data) {
     try {
-        const airplanes = await airportRepository.getAll();
-        return airplanes;
+        console.log("Data obj passed to airport: " + data);
+         let customFilter = {};
+         customFilter.code = data;
+         const airplanes = await airportRepository.getAllAirports(customFilter);
+         console.log("Get Airports: ", airplanes);
+         return airplanes;
     }
     catch(error) {
 
@@ -36,7 +41,9 @@ async function getAirports() {
 
 async function getAirport(data) {
     try {
-        const airplane = await airportRepository.get(data);
+        let customFilter = {};
+        customFilter.code = 'MUM';
+        const airplane = await airportRepository.getAllAirports(customFilter);
         return airplane;
     }
     catch(error) {

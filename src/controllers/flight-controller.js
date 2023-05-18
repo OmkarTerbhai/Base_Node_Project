@@ -1,6 +1,7 @@
 const { FlightService } = require('../services');
 const { StatusCodes } = require('http-status-codes');
 const { SuccessResponse, ErrorResponse } = require('../utils/common');
+const { Logger } = require('../config');
 
 async function createFlight(req, res) {
     try {
@@ -26,6 +27,21 @@ async function createFlight(req, res) {
     }
 }
 
+async function getAllFlights(req, res) {
+    try {
+        console.log(req.query);
+        const flights = await FlightService.getAllFlights(req.query);
+        console.log("In Flgght service: ", flights);
+        SuccessResponse.message = "Successfully found an flights";
+        SuccessResponse.data = flights;
+        return res.status(StatusCodes.CREATED).json(SuccessResponse);
+    }
+    catch(error) {
+
+    }
+}
+
 module.exports =  {
-    createFlight
+    createFlight,
+    getAllFlights
 }
