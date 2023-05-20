@@ -73,31 +73,31 @@ async function getAllFlights(query) {
      */
 
     const flights = await flightRepository.getAllFlights(customFilter, sortFilter);
-    let arrivalAirportCodes = [];
-    flights.forEach( (f) => arrivalAirportCodes.push(f.dataValues.arrivalAirportId));
-    const airports = await AirportService.getAirports(arrivalAirportCodes);
-    let airportDetails = [];
+    // let arrivalAirportCodes = [];
+    // flights.forEach( (f) => arrivalAirportCodes.push(f.dataValues.arrivalAirportId));
+    // const airports = await AirportService.getAirports(arrivalAirportCodes);
+    // let airportDetails = [];
 
-    //Sort airport details according to arrivalAirportId occuring in flight records.
-    flights.forEach((flight) => {
-        flight.dataValues.arrivalAirportDetails = 
-            airports.forEach((airport) => {
-                if(airport.dataValues.code == flight.dataValues.arrivalAirportId) {
-                    console.log("For each values: ", airport.dataValues);
-                    airportDetails.push(airport.dataValues);
-                }
-        });
-    });
+    // //Sort airport details according to arrivalAirportId occuring in flight records.
+    // flights.forEach((flight) => {
+    //     flight.dataValues.arrivalAirportDetails = 
+    //         airports.forEach((airport) => {
+    //             if(airport.dataValues.code == flight.dataValues.arrivalAirportId) {
+    //                 console.log("For each values: ", airport.dataValues);
+    //                 airportDetails.push(airport.dataValues);
+    //             }
+    //     });
+    // });
 
     
-    mapFlightToAirport(flights, airportDetails);
-    function mapFlightToAirport(flights, airports) {
-        console.log("Flight size ", flights.length);
-        console.log("Airport size ", airports.length);
-        for(let i = 0; i < flights.length; i++) {
-            flights[i].dataValues.arrivalAirportDetails = airportDetails[i];
-        }
-    }
+    // mapFlightToAirport(flights, airportDetails);
+    // function mapFlightToAirport(flights, airports) {
+    //     console.log("Flight size ", flights.length);
+    //     console.log("Airport size ", airports.length);
+    //     for(let i = 0; i < flights.length; i++) {
+    //         flights[i].dataValues.arrivalAirportDetails = airportDetails[i];
+    //     }
+    //}
 
     return flights;
 }
