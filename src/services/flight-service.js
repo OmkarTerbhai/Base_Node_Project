@@ -11,6 +11,8 @@ const flightRepository = new FlightRepository();
 async function createFlight(data) {
     console.log("Inside Service")
     try {
+        data.arrivalTime = new Date(data.arrivalTime);
+        data.departureTime = new Date(data.departureTime);
         const flight = await flightRepository.create(data);
         return flight;
     }
@@ -50,7 +52,7 @@ async function getAllFlights(query) {
     if(query.tripDate) {
         console.log(query.tripDate);
         customFilter.departureTime = {
-            [Op.eq]: query.tripDate + " 00:00:00"
+            [Op.gte]: new Date(query.tripDate)
         }
     }
 
@@ -75,6 +77,8 @@ async function getAllFlights(query) {
     flights.forEach( (f) => arrivalAirportCodes.push(f.dataValues.arrivalAirportId));
     const airports = await AirportService.getAirports(arrivalAirportCodes);
     let airportDetails = [];
+
+    //Sort airport details according to arrivalAirportId occuring in flight records.
     flights.forEach((flight) => {
         flight.dataValues.arrivalAirportDetails = 
             airports.forEach((airport) => {
@@ -84,6 +88,8 @@ async function getAllFlights(query) {
                 }
         });
     });
+
+    
     mapFlightToAirport(flights, airportDetails);
     function mapFlightToAirport(flights, airports) {
         console.log("Flight size ", flights.length);
