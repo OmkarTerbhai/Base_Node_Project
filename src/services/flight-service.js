@@ -102,7 +102,20 @@ async function getAllFlights(query) {
     return flights;
 }
 
+async function getFlight(data) {
+    try {
+        const flight = await flightRepository.get(data);
+        return flight;
+    }
+    catch(error) {
+        if(error.statusCode == StatusCodes.NOT_FOUND) {
+            throw new AppError("Flight does not exist", StatusCodes.NOT_FOUND);
+        }
+    }
+}
+
 module.exports = {
     createFlight,
-    getAllFlights
+    getAllFlights,
+    getFlight
 }
