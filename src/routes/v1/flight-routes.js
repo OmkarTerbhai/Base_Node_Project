@@ -10,5 +10,7 @@ router.get('/', FlightController.getAllFlights);
 
 router.get('/:id', FlightController.getFlight);
 
+router.patch('/:id/seats', FlightController.updateRemainingSeats);
+
 module.exports = 
     router
