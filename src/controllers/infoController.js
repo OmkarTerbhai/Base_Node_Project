@@ -1,4 +1,5 @@
 const  { StatusCodes } = require('http-status-codes');
+const { Logger } = require('../config');
 
 const info = (req, res) => {
     return res.status(StatusCodes.OK).json({

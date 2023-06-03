@@ -1,6 +1,7 @@
 const { ServerConfig, Logger } = require('./config');
 const express = require('express');
 const apiRoutes = require('./routes');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 
 app.use(express.json());
