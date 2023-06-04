@@ -1,11 +1,10 @@
 const { Logger } = require('../config');
-const { FlightRepository } = require('../repositories');
+const { FlightRepository, SeatFlightRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
 const { Op } = require('sequelize');
-const AirportService = require('./airport-service');
 
-
+const seatFlightRepository = new SeatFlightRepository();
 const flightRepository = new FlightRepository();
 
 async function createFlight(data) {
@@ -126,9 +125,20 @@ async function updateRemainingSeats(data) {
     }
 }
 
+async function checkIn(data) {
+    try {
+        const response = seatFlightRepository.create(data);
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 module.exports = {
     createFlight,
     getAllFlights,
     getFlight,
-    updateRemainingSeats
+    updateRemainingSeats,
+    checkIn
 }

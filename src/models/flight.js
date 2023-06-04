@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "arrivalAirportDetails"
       });
 
+      this.belongsToMany(models.Seat, {
+        through: 'Seat_Flight_Bookings',
+        as: 'seat'
+      })
+
     }
   }
   Flight.init({
