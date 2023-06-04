@@ -114,6 +114,7 @@ async function getFlight(data) {
     }
 }
 
+//Update seats after booking
 async function updateRemainingSeats(data) {
     console.log(data);
     try {
