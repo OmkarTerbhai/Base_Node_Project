@@ -1,6 +1,6 @@
-const { ServerConfig, Logger } = require('./config');
+const { ServerConfig, Logger } = require('./src/config');
 const express = require('express');
-const apiRoutes = require('./routes');
+const apiRoutes = require('./src/routes');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 

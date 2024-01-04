@@ -1,0 +1,8 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: Project1
+    src: .
+    engine: nodejs16
+    run: npm run dev
+    dev: npm run dev

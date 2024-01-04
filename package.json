@@ -4,7 +4,7 @@
   "description": "basic template for node js project",
   "main": "index.js",
   "scripts": {
-    "dev": "node --watch src/index.js"
+    "dev": "node --watch index.js"
   },
   "author": "Omkar Terbhai",
   "license": "ISC",

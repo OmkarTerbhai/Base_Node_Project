@@ -29,8 +29,8 @@ async function createFlight(data) {
 }
 
 async function getAllFlights(query) {
-    let customFilter = {};
-    let sortFilter = [];
+    let customFilter = null;
+    let sortFilter = null;
     if(query.trips) {
         console.log("Inside if");
         [ departureAirportId , arrivalAirportId ] = query.trips.split("-");

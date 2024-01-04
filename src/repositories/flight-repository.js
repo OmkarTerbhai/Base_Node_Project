@@ -14,39 +14,48 @@ class FlightRepository extends CrudRepository {
     }
 
     async  getAllFlights(filter, sort) {
-        const response = await Flight.findAll({
-            where: filter,
-            order: sort,
-            include: [
-                {
-                    model: Airplane,
-                    required: true,
-                    as: "airplaneDetails"
-                },
-                {
-                    model: Airport,
-                    required: true,
-                    as: "departureAirportDetails",
-                    on: {
-                        col1: Sequelize.where(Sequelize.col("Flight.departureAirportId"), "=", Sequelize.col("departureAirportDetails.code"))
+        let response = null;
+        console.log("Inside flight repo");
+        if(filter && sort) {
+            response = await Flight.findAll({
+                where: filter,
+                order: sort,
+                include: [
+                    {
+                        model: Airplane,
+                        required: true,
+                        as: "airplaneDetails"
                     },
-                    include: [
-                        {
-                            model: City,
-                            reuired: true
-                        }
-                    ]
-                },
-                {
-                    model: Airport,
-                    required: true,
-                    as: "arrivalAirportDetails",
-                    on: {
-                        col1: Sequelize.where(Sequelize.col("Flight.arrivalAirportId"), "=", Sequelize.col("arrivalAirportDetails.code"))
+                    {
+                        model: Airport,
+                        required: true,
+                        as: "departureAirportDetails",
+                        on: {
+                            col1: Sequelize.where(Sequelize.col("Flight.departureAirportId"), "=", Sequelize.col("departureAirportDetails.code"))
+                        },
+                        include: [
+                            {
+                                model: City,
+                                reuired: true
+                            }
+                        ]
                     },
-                }
-            ]
-        });
+                    {
+                        model: Airport,
+                        required: true,
+                        as: "arrivalAirportDetails",
+                        on: {
+                            col1: Sequelize.where(Sequelize.col("Flight.arrivalAirportId"), "=", Sequelize.col("arrivalAirportDetails.code"))
+                        },
+                    }
+                ]
+            });
+        }
+       else {
+            console.log("Inside flight repo else");
+            response = await Flight.findAll();
+            console.log("Data: ", response);
+        }
         return response;
     }
 

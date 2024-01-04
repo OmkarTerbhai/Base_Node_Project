@@ -29,7 +29,7 @@ async function createFlight(req, res) {
 
 async function getAllFlights(req, res) {
     try {
-        console.log(req.query);
+        console.log("Inside controller...");
         const flights = await FlightService.getAllFlights(req.query);
         console.log("In Flgght service: ", flights);
         SuccessResponse.message = "Successfully found an flights";
