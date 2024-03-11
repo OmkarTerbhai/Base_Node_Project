@@ -20,6 +20,7 @@ async function createAirplane(data) {
             })
             throw new AppError(explanation, StatusCodes.INTERNAL_SERVER_ERROR);
         }
+        console.log("Airplace Error: ", error);
         throw new AppError("Cannot create a new airplane object", StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
